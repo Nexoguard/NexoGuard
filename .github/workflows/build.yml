@@ -17,10 +17,12 @@ jobs:
           pip3 install --user --upgrade buildozer Cython==0.29.33 virtualenv
           echo "$HOME/.local/bin" >> $GITHUB_PATH
 
-      - name: Fabricar o APK Nativo
+      - name: Fabricar o APK Nativo com Aceite de Licença
         run: |
           export PATH=$PATH:$HOME/.local/bin
-          buildozer -v android debug
+          # Este comando diz SIM automaticamente para todos os contratos do Google Android SDK
+          yes | buildozer -v android debug
+        continue-on-error: false
 
       - name: Guardar o APK Pronto
         uses: actions/upload-artifact@v4
